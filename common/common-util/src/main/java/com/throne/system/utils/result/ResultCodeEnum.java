@@ -1,4 +1,4 @@
-package com.throne.utils.result;
+package com.throne.system.utils.result;
 
 import lombok.Getter;
 

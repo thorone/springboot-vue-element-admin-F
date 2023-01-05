@@ -1,4 +1,4 @@
-package com.throne.utils.result;
+package com.throne.system.utils.result;
 
 /**
  * 统一返回结果类
@@ -24,8 +24,30 @@ public class Result<T> {
         build.setMessage(resultCodeEnum.getMessage());
         return build;
     }
+    public static<T> Result<T> ok(){
+        return Result.ok(null);
+    }
     public static<T> Result<T> ok(T data){
         return build(data,ResultCodeEnum.SUCCESS);
+    }
+
+    public Result<T> message(String message){
+        this.setMessage(message);
+        return this;
+    }
+
+    public Result<T> code(Integer code){
+        this.setCode(code);
+        return this ;
+    }
+
+    public static<T> Result<T> fail(){
+        return Result.fail(null);
+    }
+
+    public static<T> Result<T> fail(T data){
+        return build(data,ResultCodeEnum.FAIL);
+
     }
 
     public Integer getCode() {

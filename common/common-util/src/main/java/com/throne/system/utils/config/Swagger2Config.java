@@ -1,4 +1,4 @@
-package com.throne.utils.config;
+package com.throne.system.utils.config;
 
 import com.google.common.base.Predicates;
 import org.springframework.context.annotation.Bean;
