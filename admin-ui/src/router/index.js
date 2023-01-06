@@ -76,6 +76,27 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/system',
+    component: Layout,
+    redirect: '/system/sysUser',
+    name: 'system',
+    meta: { title: '系统管理', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'sysUser',
+        name: 'sysUser',
+        component: () => import('@/views/sysUser/index'),
+        meta: { title: '用户管理', icon: 'table' }
+      },
+      {
+        path: 'tree',
+        name: 'Tree',
+        component: () => import('@/views/tree/index'),
+        meta: { title: 'Tree', icon: 'tree' }
+      }
+    ]
+  },
 
   {
     path: '/form',

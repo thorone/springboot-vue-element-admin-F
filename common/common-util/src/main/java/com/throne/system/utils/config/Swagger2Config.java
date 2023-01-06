@@ -29,7 +29,7 @@ public class Swagger2Config {
 
         //添加head参数start
         List<Parameter> pars = new ArrayList<>();
-        ParameterBuilder tokenPar = new ParameterBuilder();
+/*        ParameterBuilder tokenPar = new ParameterBuilder();
         tokenPar.name("userId")
                 .description("用户ID")
                 .defaultValue("1")
@@ -47,7 +47,7 @@ public class Swagger2Config {
                 .parameterType("header")
                 .required(false)
                 .build();
-        pars.add(tmpPar.build());
+        pars.add(tmpPar.build())*/;
         //添加head参数end
 
         return new Docket(DocumentationType.SWAGGER_2)
