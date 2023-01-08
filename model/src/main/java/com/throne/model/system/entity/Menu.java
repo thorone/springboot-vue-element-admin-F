@@ -1,15 +1,18 @@
 package com.throne.model.system.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -34,16 +37,20 @@ public class Menu implements Serializable {
     /**
      * 菜单名称
      */
+    @TableField(value = "menu_name")
+    @NotBlank(message = "菜单名称不能为空")
     private String menuName;
 
     /**
      * 父菜单ID
      */
+    @TableField(value = "parent_id")
     private Long parentId;
 
     /**
      * 显示顺序
      */
+    @TableField(value = "order_num")
     private Integer orderNum;
 
     /**
@@ -59,6 +66,7 @@ public class Menu implements Serializable {
     /**
      * 菜单类型（M目录 C菜单 F按钮）
      */
+    @TableField(value = "menu_type")
     private String menuType;
 
     /**
@@ -69,6 +77,7 @@ public class Menu implements Serializable {
     /**
      * 是否刷新（0刷新 1不刷新）
      */
+    @TableField(value = "is_refresh")
     private String isRefresh;
 
     /**
@@ -84,27 +93,43 @@ public class Menu implements Serializable {
     /**
      * 创建者
      */
+    @TableField(value = "create_by")
     private String createBy;
 
     /**
      * 创建时间
      */
+    @TableField(value = "create_time")
     private Date createTime;
 
     /**
      * 更新者
      */
+    @TableField(value = "update_by")
     private String updateBy;
 
     /**
      * 更新时间
      */
+    @TableField(value = "update_time")
     private Date updateTime;
 
     /**
      * 备注
      */
     private String remark;
+
+    /**
+     * 是否选中
+     */
+    @TableField(exist = false)
+    private Boolean isSelect;
+
+    /**
+     * 菜单列表
+     */
+    @TableField(exist = false)
+    private List<Menu> children;
 
 
 }

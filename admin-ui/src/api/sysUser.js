@@ -11,5 +11,26 @@ export default{
             //参数
             data: params
         })
+    },
+    getUserById(userId){
+        return request({
+            url:`${api_name}/getUserById/${userId}`,
+            method:'get',
+            params:''
+        })
+    },
+    editUser(params){
+        return request({
+            url:`${api_name}/editUser`,
+            method:'post',
+            data: params
+        })
+    },
+    addUser(params){
+        return request({
+            url:`${api_name}/addUser`,
+            method:'post',
+            data:params
+        })
     }
 }

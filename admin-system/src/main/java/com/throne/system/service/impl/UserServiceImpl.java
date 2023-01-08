@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -70,6 +71,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public void addUser(User user) {
         String password = user.getPassword();
+        user.setCreateTime(new Date());
+        user.setUpdateTime(new Date());
         user.setPassword(SecureUtil.md5(password));
         userMapper.insert(user);
     }
@@ -86,5 +89,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public void editUser(User user) {
         userMapper.updateById(user);
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        User user = userMapper.selectById(id);
+        return user;
     }
 }

@@ -2,9 +2,9 @@ package com.throne.model.system.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -17,8 +17,8 @@ import java.util.Date;
  * @author throne
  * @since 2023-01-04
  */
-@Data
 @TableName("sys_user")
+@Data
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -32,18 +32,21 @@ public class User implements Serializable {
     /**
      * 登陆账号
      */
+    @NotBlank(message = "登陆账号不能为空")
     @TableField(value = "login_name")
     private String loginName;
 
     /**
      * 用户昵称
      */
+    @Size(min = 0,max = 30,message = "用户昵称范围0-30")
     @TableField(value = "user_name")
     private String userName;
 
     /**
      * 用户密码
      */
+    @NotBlank(message = "密码不能为空")
     private String password;
 
     /**

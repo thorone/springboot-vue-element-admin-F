@@ -23,4 +23,6 @@ public interface UserService extends IService<User>{
     void delUser(String userName);
 
     void editUser(User user);
+
+    User getUserById(Long id);
 }

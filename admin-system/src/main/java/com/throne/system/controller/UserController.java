@@ -10,8 +10,10 @@ import com.throne.system.utils.exception.ThroneException;
 import com.throne.system.utils.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 
@@ -40,7 +42,7 @@ public class UserController {
     }
 
     @PostMapping("/addUser")
-    public Result addUser(@RequestBody User user){
+    public Result addUser(@Validated  @RequestBody User user){
         if (user != null) {
             userService.addUser(user);
             return Result.ok();
@@ -58,7 +60,7 @@ public class UserController {
     }
 
     @PostMapping("/editUser")
-    public Result editUser(@RequestBody User user){
+    public Result editUser(@Validated  @RequestBody User user){
         if (user !=null ){
             userService.editUser(user);
             return Result.ok();
@@ -68,8 +70,8 @@ public class UserController {
 
     @GetMapping("/getUserById/{id}")
     public Result getUserById(@PathVariable Long id){
-        //TODO
-        return null;
+        User user =  userService.getUserById(id);
+        return Result.ok(user);
     }
 
     @GetMapping("/error")

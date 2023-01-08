@@ -14,6 +14,9 @@
         <el-button type="primary" @click="onSubmit">查询</el-button>
       </el-form-item>
     </el-form>
+    <el-row>
+      <el-button type="primary" @click="addClick()" >新增用户</el-button>
+    </el-row>
     <el-table :data="tableData" height="500" border style="width: 100%">
       <el-table-column
         fixed
@@ -40,26 +43,39 @@
           <el-button @click="handleClick(scope.row)" type="text" size="small"
             >查看</el-button
           >
-          <el-button type="text" size="small">编辑</el-button>
+          <el-button type="text" size="small" @click="editClick(scope.row)">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body>
-      <el-form :model="form">
-        <el-form-item label="活动名称" >
-          <el-input v-model="form.name" autocomplete="off"></el-input>
+      <el-form :inline="true" :model="form">
+        <el-form-item label="登陆账号">
+          <el-input v-model="form.loginName" disabled autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="活动区域" >
-          <el-select v-model="form.region" placeholder="请选择活动区域">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
+        <el-form-item label="用户名">
+          <el-input  v-model="form.loginName" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="邮箱地址">
+          <el-input v-model="form.email" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="备注">
+          <el-input v-model="form.remark" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item v-if="form.userId == undefined" label="用户密码">
+          <el-input type="password" v-model="form.password" placeholder="用户密码"></el-input>
+        </el-form-item>
+        <el-form-item label="性别">
+          <el-select v-model="form.sex" placeholder="请选择活动区域">
+            <el-option label="男" value="0"></el-option>
+            <el-option label="女" value="1"></el-option>
+            <el-option label="未知" value="2"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="open = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false"
+        <el-button type="primary" @click="submit"
           >确 定</el-button
         >
       </div>
@@ -83,6 +99,7 @@
 
 <script>
 import sysUserApi from "@/api/sysUser";
+import sysUser from '@/api/sysUser';
 export default {
   data() {
     return {
@@ -101,14 +118,45 @@ export default {
     };
   },
   methods: {
-    resetForm(){
-        this.form={}
+    resetForm() {
+      this.form = {};
     },
     handleClick(row) {
       this.resetForm();
 
       console.log(row);
+
       this.open = true;
+    },
+    addClick(){
+      this.resetForm();
+      this.open = true;
+    },
+    editClick(row){
+      this.open = true;
+      sysUserApi.getUserById(row.userId).then(res=>{
+        this.form = res.data;
+      })
+    },
+    submit(){
+      if(this.form.userId != undefined){
+        sysUserApi.editUser(this.form).then(res=>{
+        if(res.code == 200){
+            this.$message.success("修改成功");
+            this.open = false;
+            this.getList();
+        }
+      })
+      }else{
+        sysUser.addUser(this.form).then(res=>{
+          if(res.code == 200){
+            this.$message.success("创建成功");
+            this.open = false;
+            this.getList();
+          }
+        })
+      }
+      
     },
     onSubmit() {
       this.getList();
