@@ -9,6 +9,7 @@ import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -72,6 +73,9 @@ public class Role implements Serializable {
      * 备注
      */
     private String remark;
+
+    @TableField(exist = false)
+    public List<Long> menuIdList;
 
 
 }

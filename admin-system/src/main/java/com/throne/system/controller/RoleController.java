@@ -27,7 +27,7 @@ public class RoleController {
     @PostMapping("/addRole")
     public Result addRole(@Validated @RequestBody Role role){
         if (role != null){
-            roleService.save(role);
+            roleService.addRole(role);
             return Result.ok();
         }
         throw new ThroneException(200001,"创建失败,请练习管理员");

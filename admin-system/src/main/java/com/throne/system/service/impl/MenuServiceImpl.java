@@ -25,8 +25,6 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     @Override
     public List<Menu> getMenuListByRoleId(Long roleId) {
         //获取全部菜单列表
-        QueryWrapper<Menu> menuQueryWrapper = new QueryWrapper<>();
-        menuQueryWrapper.eq("menu_type","M").or().eq("menu_type","F");
         List<Menu> menus = menuMapper.selectList(null);
         //获取角色菜单列表
         QueryWrapper<RoleMenu> roleMenuQueryWrapper = new QueryWrapper<>();
