@@ -6,14 +6,18 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.throne.model.system.entity.User;
+import com.throne.model.system.entity.UserRole;
 import com.throne.model.system.vo.LoginVo;
 import com.throne.model.system.vo.SysUserQueryVo;
+import com.throne.system.mapper.RoleMapper;
 import com.throne.system.mapper.UserMapper;
+import com.throne.system.mapper.UserRoleMapper;
 import com.throne.system.service.UserService;
 import com.throne.system.utils.exception.ThroneException;
 import org.apache.tomcat.util.security.MD5Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
@@ -23,6 +27,13 @@ import java.util.List;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService{
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private RoleMapper roleMapper;
+
+
+    @Autowired
+    private UserRoleMapper userRoleMapper;
 
     public List<User> getUserByParam() {
         IPage<User> userPage = new Page<User>();
@@ -75,6 +86,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user.setUpdateTime(new Date());
         user.setPassword(SecureUtil.md5(password));
         userMapper.insert(user);
+        List<Long> roleList = user.getRoleList();
+
     }
 
     @Override
@@ -86,14 +99,32 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         userMapper.deleteById(user.getUserId());
     }
 
+
     @Override
+    @Transactional
     public void editUser(User user) {
+        user.setUpdateTime(new Date());
         userMapper.updateById(user);
+        //删除userRoleById
+        QueryWrapper<UserRole> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id",user.getUserId());
+        userRoleMapper.delete(queryWrapper);
+        //插入userRolelist
+        UserRole userRole = new UserRole();
+        userRole.setUserId(user.getUserId());
+        for (Long roleId : user.getRoleList()) {
+            userRole.setRoleId(roleId);
+            userRoleMapper.insert(userRole);
+        }
+
     }
 
     @Override
     public User getUserById(Long id) {
         User user = userMapper.selectById(id);
+        //获取user 角色集合
+        List<Long> roleListId =  roleMapper.getRoleListByUserId(id);
+        user.setRoleList(roleListId);
         return user;
     }
 }

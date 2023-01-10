@@ -38,5 +38,12 @@ export default{
             method:'post',
             data:param
         })
+    },
+    getTotalRole(){
+        return request({
+            url:`${role_api}/getTotalRole`,
+            method:'get',
+            params:''
+        })
     }
 }

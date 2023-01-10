@@ -8,6 +8,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -121,6 +122,9 @@ public class User implements Serializable {
      * 备注
      */
     private String remark;
+
+    @TableField(exist = false)
+    private List<Long> roleList;
 
 
 }

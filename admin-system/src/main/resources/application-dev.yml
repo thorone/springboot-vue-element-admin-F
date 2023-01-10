@@ -25,7 +25,7 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: false
   mapper-locations: classpath:mapper/*Mapper.xml # 编写复杂的sql 语句 ，mybatis-plus 对多表关联支持性差。手写xml文件{sql语句}
-  type-aliases-package: com.throne.entity
+  type-aliases-package: com.throne.model.system.*
 
 logging:
   level: debug

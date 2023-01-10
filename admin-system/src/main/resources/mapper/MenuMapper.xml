@@ -3,5 +3,18 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.throne.system.mapper.MenuMapper">
-
+    <select id="getMenuListByUserId" parameterType="Long" resultType="Menu">
+        select distinct sm.menu_id, sm.menu_name, sm.parent_id, sm.order_num, sm.path, sm.url, sm.target, sm.menu_type, sm.visible, sm.is_refresh, sm.perms, sm.icon, sm.create_by, sm.create_time, sm.update_by, sm.update_time, sm.remark
+    from sys_menu sm
+    left join sys_role_menu srm on sm.menu_id = srm.menu_id
+    left join sys_user_role sur on srm.role_id = sur.role_id
+    where sur.user_id = #{userId} and sm.menu_type!='F';
+    </select>
+    <select id="getPermsListByUserId" parameterType="Long" resultType="Menu">
+        select distinct sm.menu_id, sm.menu_name, sm.parent_id, sm.order_num, sm.path, sm.url, sm.target, sm.menu_type, sm.visible, sm.is_refresh, sm.perms, sm.icon, sm.create_by, sm.create_time, sm.update_by, sm.update_time, sm.remark
+    from sys_menu sm
+    left join sys_role_menu srm on sm.menu_id = srm.menu_id
+    left join sys_user_role sur on srm.role_id = sur.role_id
+    where sur.user_id = #{userId} and sm.menu_type ='F';
+    </select>
 </mapper>

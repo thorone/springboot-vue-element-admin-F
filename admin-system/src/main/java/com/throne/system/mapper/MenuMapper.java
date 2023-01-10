@@ -10,4 +10,10 @@ import java.util.List;
 @Mapper
 public interface MenuMapper extends BaseMapper<Menu> {
     List<Menu> getMenuListByRoleId(@Param("roleId") Long roleId);
+
+    List<Menu> getMenuListByUserId(@Param(("userId")) Long userId);
+
+    List<Menu> getPermsListByUserId(@Param("userId") Long userId);
+
+
 }

@@ -12,6 +12,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/system/role")
 public class RoleController {
@@ -82,5 +84,11 @@ public class RoleController {
         }
         roleService.page(rolePage,queryWrapper);
         return Result.ok(rolePage);
+    }
+
+    @GetMapping("/getTotalRole")
+    public Result getTotalRole(){
+        List<Role> roleItemList = roleService.list(null);
+        return Result.ok(roleItemList);
     }
 }

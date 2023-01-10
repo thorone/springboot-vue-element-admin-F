@@ -42,6 +42,11 @@ public class Menu implements Serializable {
     private String menuName;
 
     /**
+     * 组件路径
+     */
+    private String path;
+
+    /**
      * 父菜单ID
      */
     @TableField(value = "parent_id")

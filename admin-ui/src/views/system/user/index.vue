@@ -15,7 +15,7 @@
       </el-form-item>
     </el-form>
     <el-row>
-      <el-button type="primary" @click="addClick()">新增用户</el-button>
+      <el-button type="primary"  @click="addClick()" :disabled="$hasBP('system:user:add')  === false">新增用户</el-button>
     </el-row>
     <el-table :data="tableData" height="500" border style="width: 100%">
       <el-table-column
